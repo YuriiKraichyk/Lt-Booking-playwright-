@@ -36,4 +36,33 @@ export default class EditAppointment {
     await expect(actualLastName).toContain(lastName);
     await expect(actualPhoneNumber).toContain(phone);
   }
+
+  //Edit data in the editor window and save the changes
+  async editTheDataAndSave() {
+    //LOCATORS
+    //create the locator for firstName Field
+    const firstnamefield = this.page.locator(
+      "(//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input')])[2]"
+    );
+
+    //create the locator for lastname field
+    const lastname = this.page.locator(
+      "(//input[contains(@class,'MuiInputBase-input MuiOutlinedInput-input')])[1]"
+    );
+
+    //create the locator for phone number field
+    const phonefield = this.page.locator("input[type='number']");
+
+    //TO DO
+
+    //clear and add new firstname
+    await firstnamefield.fill("");
+    await firstnamefield.fill("Test1");
+    //clear and add new lastname
+    await lastname.fill("");
+    await lastname.fill("YuriiAuto");
+    //clear and add new phone number
+    await phonefield.fill("");
+    await phonefield.fill("");
+  }
 }
