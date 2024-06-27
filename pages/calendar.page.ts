@@ -2,7 +2,15 @@ import { Page, Locator, expect } from "@playwright/test";
 
 export default class CalendarPage {
   constructor(public page: Page) {}
-
+  //go to the next date page
+  async gotoNextDayClick() {
+    await this.page
+      .locator(
+        "button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.DatePicker_arrowIconButton__beZN9"
+      )
+      .nth(1)
+      .click();
+  }
   // click on add new appointment button
   async addNewAppointmentClick() {
     const addAppointmentButton: Locator = this.page.getByRole("button", {
@@ -45,12 +53,12 @@ export default class CalendarPage {
     await this.page.locator("//input[@type='number']").fill(phonenumber);
   }
 
-  // click ShowAll time
-  async ShowAllTimeClick() {
-    await this.page.click(
-      "label.MuiFormLabel-root.MuiFormLabel-colorPrimary.css-11dpzdo"
-    );
-  }
+  // // // click ShowAll time
+  // // async ShowAllTimeClick() {
+  // //   await this.page.click(
+  // //     "label.MuiFormLabel-root.MuiFormLabel-colorPrimary.css-11dpzdo"
+  // //   );
+  // }
   // choose time
   async chooseTime() {
     //find the first button that have a ':' in a text
@@ -68,18 +76,12 @@ export default class CalendarPage {
     const currentUrl = this.page.url();
     expect(currentUrl).toBe(expectedcalendarURL);
   }
+
   // check that the event was created by First and Last names
-
   async checkTheEventCreated(firstName, lastName) {
-    const locator = this.page.locator(
-      "(//div[@class='DayEventBase_wrapper__gSr9T DayEventBase_appointment__6WA2X']//div)[1]"
-    );
-
-    // Get the actual text content of the element
-    const actualText = await locator.innerText();
-
-    // Check if both firstName and lastName are contained within the actual text
-    await expect(actualText).toContain(firstName);
-    await expect(actualText).toContain(lastName);
+    // Create a selector that targets the element containing the event text
+    const eventLocator = this.page.locator(`text=${firstName} ${lastName}`);
+    // Check that the event is visible on the page
+    await expect(eventLocator).toBeVisible();
   }
 }
