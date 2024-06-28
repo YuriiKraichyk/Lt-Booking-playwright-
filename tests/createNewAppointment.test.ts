@@ -4,6 +4,7 @@ import LoginPage from "../pages/login.page";
 import CalendarPage from "../pages/calendar.page";
 import EditAppointment from "../pages/editAppointment.page";
 import AddSpecific from "../pages/specificEmployee.page";
+import EditAppointmentDate from "../pages/changeDate.page";
 
 test.describe.serial("SmokeTest", () => {
   let startPage: StartingPage;
@@ -11,8 +12,10 @@ test.describe.serial("SmokeTest", () => {
   let calendarPage: CalendarPage;
   let editAppoitmentPage: EditAppointment;
   let addSpecificEmployee: AddSpecific;
+  let editAppointmentDate: EditAppointmentDate;
   let page;
 
+  //test data
   const lastName = "YuriiQA";
   const firstName = "test";
   const phone = "09811111111";
@@ -21,6 +24,11 @@ test.describe.serial("SmokeTest", () => {
   const editedFirstname = "Auto";
   const editedPhonenumber = "12345678";
   const editedNotes = "qqq";
+  let today: Date = new Date();
+  // Add 2 days to today's date
+  today.setDate(today.getDate() + 2);
+  // Get the day (1-31) from the date
+  let targetDay: number = today.getDate();
 
   test.beforeAll(async ({ browser, baseURL }) => {
     // Set up a single browser context and page for all tests
@@ -33,6 +41,7 @@ test.describe.serial("SmokeTest", () => {
     calendarPage = new CalendarPage(page);
     editAppoitmentPage = new EditAppointment(page);
     addSpecificEmployee = new AddSpecific(page);
+    editAppointmentDate = new EditAppointmentDate(page);
 
     await page.goto(`${baseURL}login-continue?client_id=ltb`);
     await startPage.clickWeitermachenButton();
@@ -121,6 +130,15 @@ test.describe.serial("SmokeTest", () => {
     await addSpecificEmployee.chooseScpecificEmployee();
     //select time slot and click on save button
     await addSpecificEmployee.chooseTimeSlot();
+  });
+
+  test("Check that the specific employee add and Change the appointment date", async () => {
+    //open the edit form
+    await editAppointmentDate.clickOnEditForm();
+    //click on calendar button
+    await editAppointmentDate.clickOnCalendar();
+    //choose the date in the calendar
+    await editAppointmentDate;
   });
 
   test.afterAll(async () => {
