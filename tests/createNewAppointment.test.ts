@@ -140,12 +140,14 @@ test.describe.serial("SmokeTest", () => {
     await editAppointmentDate.clickOnCalendar();
     //choose the date in the calendar and save it
     await editAppointmentDate.selectCalendarDate();
+    await editAppointmentDate.saveChanges();
   });
 
   test("Check that the Appointment was rescheduled", async () => {
     //go to the next day
     await rescheduledDay.goToTheNextDay();
     await rescheduledDay.clickOnRescheduledAppointment();
+    await rescheduledDay.checkData();
     await rescheduledDay.closeTheEditWindow();
   });
 

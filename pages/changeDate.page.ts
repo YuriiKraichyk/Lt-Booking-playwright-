@@ -32,8 +32,9 @@ export default class EditAppointmentDate {
       .getByRole("gridcell", { name: `${targetDay}`, exact: true })
       .first()
       .click();
-
-    //click on the save button
+  }
+  //click on the save button
+  async saveChanges() {
     await this.page
       .locator(
         "//button[contains(@class,'MuiButtonBase-root MuiButton-root')]/following-sibling::button[1]"
